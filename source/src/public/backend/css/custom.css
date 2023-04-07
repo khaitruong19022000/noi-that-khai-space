@@ -1,0 +1,73 @@
+.img_List {
+    height: 40px;
+}
+
+.img_Form {
+    height: 100px;
+    padding-left: 25%;
+}  
+
+.img_List img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    transition: all 5s;
+}
+
+/*Setting*/
+button.btn_setting{
+  width: 150px;
+}
+
+div.button_setting{
+  margin: 0 auto;
+  width: 1000px;
+  text-align:center;
+}
+
+div.button_submit{
+  margin-left:0%;
+}
+
+/*Table in List Article*/
+
+table.my_table{
+  width: 100%;
+}
+
+table.my_table th.name{
+    height: 70px;
+}
+
+.form-group-sub{
+  margin-left: 5%;
+}
+
+.form-group-parent-left{
+  float: left;
+  background-color: rgb(215, 215, 210);
+  margin: 0 0 3% 0;
+  width: 45%;
+}
+
+.form-group-parent-right{
+  float: right;
+  background-color: rgb(241, 241, 236);
+  margin: 0 3% 3% 0;
+  width: 45%;
+}
+
+.form-parent{
+  margin: 6%;
+}
+
+/* menu */
+  /* menu form */
+.select_link{
+  width: 20%;
+  margin-left: 40%;
+}
+  /*end menu form*/
