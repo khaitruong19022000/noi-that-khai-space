@@ -1,0 +1,38 @@
+<% menuHelper = (items, listCategory) => {
+    let xhtmlMenu ='';
+    
+    items.forEach((menu) => {
+        if(menu.parent === 'false'){
+            xhtmlMenu += `<li class="menu-item">
+                            <a class="menu-link" href="${menu.link}">
+                                <div>${menu.name}</div>
+                            </a>
+                        </li>` 
+        } else if(menu.parent === 'true') {
+            let childHtml = ''
+            listCategory.forEach(function(childrenEntry){
+                childHtml+= `<ul class="sub-menu-container mega-menu-column col-lg-auto">
+                                <li class="menu-item">
+                                    <a class="menu-link" href="/${childrenEntry.slug}"><div>${childrenEntry.name}</div></a>
+                                </li>
+                            </ul>`
+            })
+            xhtmlMenu +=`<li class="menu-item mega-menu mega-menu-full">
+                            <a href="${menu.link}" class="menu-link"><div>${menu.name}</div></a>
+                            <!-- Menu DropDown
+                            ============================================= -->
+                            <div class="mega-menu-content border-bottom-0">
+                                <div class="container">
+                                    <div class="row">
+                                        ${childHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>`
+        }
+    });
+
+    return xhtmlMenu;
+}
+
+%>

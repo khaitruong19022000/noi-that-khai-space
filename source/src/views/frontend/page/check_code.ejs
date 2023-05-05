@@ -1,0 +1,39 @@
+<% include ./../../flash.ejs %>
+<section id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+
+            <div class="tabs mx-auto mb-0 clearfix" id="tab-login-register" style="max-width: 500px;">
+
+                <div class="tab-container">
+
+                    <div class="tab-content" id="tab-register">
+                        <div class="card mb-0">
+                            <div class="card-body" style="padding: 40px;">
+                                <h3>Mã Kích Hoạt</h3>
+
+                                <form id="register-form" name="register-form" class="row mb-0" action="admin/authen/signup" method="post">
+
+                                    <div class="col-12 form-group">
+                                        <input type="text"  name="user_code" value="" class="form-control" placeholder="Nhập mã kích hoạt"/>
+                                        <input type="text"  name="code" value="<%= code%>" class="form-control" hidden/>
+                                        <input type="text"  name="data" value="<%= data%>" class="form-control" hidden/>
+
+                                    </div>
+
+                                    <div class="col-12 form-group">
+                                        <button class="button button-3d button-black m-0" id="register-form-submit" name="register-form-submit" value="register">Đăng ký</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>

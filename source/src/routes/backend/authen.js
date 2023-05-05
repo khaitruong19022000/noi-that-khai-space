@@ -9,6 +9,10 @@ router
     
 router
     .route('/login')
-    .post(AuthenController.checkLogin)    
-
+    .post(AuthenController.checkLogin)
+    
+router
+    .route('/logout')
+    .get(AuthenController.checkLogout)
+ 
 module.exports = router;

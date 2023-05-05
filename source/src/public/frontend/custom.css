@@ -2,13 +2,22 @@
 .blog_slider{
     min-height: 10vh !important;
 }
+
+.blog_slider .title_breadcrumb{
+    padding: 20% 0px 0px 75%;
+}
+
+.blog_slider .title_breadcrumb a{
+    color: black;
+}
+
 .title-slide{
     margin-top: 8%;
 }
 
 /* Blog */
 .blog{
-    display: inline-block;
+    display: inline-block !important;
 }
 
 .blog_side{
@@ -33,6 +42,10 @@
     color: black;
 }
 
+.blog_category .current span{
+    color: #1ABC9C;
+}
+
 .blog_category{
     margin: 10%;
 }
@@ -51,12 +64,40 @@
 
 /* Blog Detail */
 .blog_detail{
-    margin: 3% 5% 0% 5%;
+    margin: 3% 5% 10% 5%;
 }
 
-/* Logo */
-.logo{
-    height: 70px !important
+
+.show {display: block;}
+
+/* Content artile */
+
+.content-middle{
+    width: 70%;
+    margin-top: 5%;
 }
+
+/* Cart */
+.btn-light:hover {
+    background-color: #1ABC9C;
+}
+
+u:hover {
+    color: #1ABC9C;
+    cursor: pointer;
+}
+/*--search--*/
+
+/*--notify--*/
+.text-red{
+    color: red;
+}
+
+/*--button Đơn Hàng--*/
+.donHang {
+    margin-left: 30%;
+}
+
+
 
 

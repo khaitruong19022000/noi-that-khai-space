@@ -108,20 +108,18 @@ module.exports = {
 
     editItem: async (obj) => { // (edit item)
         await ProductModel.updateOne({ _id: obj.id }, {
-            ordering: obj.ordering,
-            status: obj.status,
             name: obj.name,
+            status: obj.status,
             slug: obj.slug,
+            ordering: obj.ordering,
+            quantity: obj.quantity,
+            price: obj.price,
+            discount: obj.discount,
             content: obj.content,
-            short_description: obj.short_description,
+            arrCheck: obj.arrCheck,
+            avatar: obj.avatar,
             id_category: obj.category,
             id_group_category: obj.group,
-            avatar: obj.avatar,
-            modified: {
-                user_id: 0,
-                user_name: 'admin',
-                time: Date.now()
-            }
         });
 
         return {

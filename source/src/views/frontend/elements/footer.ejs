@@ -1,0 +1,92 @@
+<% 
+    const collection= "contact" 
+    const linkPrefix= `/${collection}`   
+%>
+
+<footer id="footer" class="border-0 bg-white">
+    <div class="container">
+
+        <!-- Footer Widgets
+        ============================================= -->
+        <div class="footer-widgets-wrap py-lg-6">
+            <div class="row col-mb-30">
+
+                <!-- Footer Col 1 -->
+                <div class="col-lg-3 col-md-3 col-6">
+                    <div class="widget widget_links widget-li-noicon">
+
+                        <h4 class="ls0 nott">Social</h4>
+
+                        <ul class="list-unstyled iconlist ms-0">
+                            <li><a href="<%= listSetting.facebook%>" target="_blank"><i class="icon-facebook"></i> Facebook</a></li>
+                            <li><a href="<%= listSetting.instagram%>" target="_blank"><i class="icon-instagram"></i> Instagram</a></li>
+                            <li><a href="<%= listSetting.youtube%>" target="_blank"><i class="icon-youtube"></i> YouTube</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <!-- Footer Col 2 -->
+                <div class="col-lg-3 col-md-3 col-6">
+                    <div class="widget widget_links widget-li-noicon">
+
+                        <h4 class="ls0 nott">Khai Space</h4>
+
+                        <ul class="list-unstyled iconlist ms-0">
+                            <li><a href="<%= listSetting.introduce%>">Giới Thiệu</a></li>
+                            <li><a href="<%= listSetting.group_member%>">Thẻ Hội Viên</a></li>
+                            <li><a href="<%= listSetting.refund_link%>">Chính Sách Đổi Trả</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <!-- Footer Col 3 -->
+                <div class="col-lg-3 col-md-3 col-6">
+                    <div class="widget widget_links widget-li-noicon">
+
+                        <h4 class="ls0 nott">Trending</h4>
+
+                        <ul class="list-unstyled iconlist ms-0">
+                            <li><a href="<%= listSetting.product_trend%>">Sản Phẩm Mới</a></li>
+                            <li><a href="<%= listSetting.design_trend%>">Phong Cách Thiết Kế Mới</a></li>
+                            <li><a href="<%= listSetting.news%>">Cổ Tích KHAI SPACE</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <!-- Footer Col 4 -->
+                <div class="col-lg-3">
+                    <div class="widget subscribe-widget clearfix" data-loader="button">
+                        <h4>Contact us</h4>
+                        <h5 class="font-body op-04"><%= listSetting.description_contact%></h5>
+                        <div class="widget-subscribe-form-result"></div>
+                        <form id="widget-subscribe-form" action="<%= linkPrefix%>" method="post" class="mb-0">
+                            <div class="input-group">
+                                <input type="email" id="email" name="email" class="form-control required email" placeholder="<%= listSetting.mail%>">
+                                <button class="btn btn-dark bg-color px-3 input-group-text" type="submit">Subscribe</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div><!-- .footer-widgets-wrap end -->
+
+    </div>
+
+    <!-- Copyrights
+    ============================================= -->
+    <div id="copyrights" class="py-3 bg-color-light">
+        <div class="container">
+
+            <div class="d-flex justify-content-between op-04">
+                <span>&copy; 2020 All Rights Reserved by Canvas Inc.</span>
+                <div class="copyright-links"><a href="#">Terms of Use</a> / <a href="#">Privacy Policy</a></div>
+            </div>
+
+        </div>
+    </div><!-- #copyrights end -->
+</footer>

@@ -2,7 +2,6 @@ const express = require('express')
 
 const router = express.Router()
 const ArticleController = require(`${__path_controllers}backend/article_controller`)
-const RssController = require(`${__path_controllers}backend/rss_controller`)
 
 router
     .route('(/status/:status)?')
@@ -19,8 +18,8 @@ router
     .get(ArticleController.getStatus)
 
 router
-    .route('/change-ordering/:id/:ordering')
-    .get(ArticleController.getOrdering)
+    .route('/change-number/:id/:number/:collection')
+    .get(ArticleController.getNumber)
     
 router
     .route('/change-category/:id/:id_category')
@@ -41,14 +40,6 @@ router
 router
     .route('/multipleAction')
     .post(ArticleController.changeMultipleAction)
-
-router
-    .route('/upload')
-    .get(ArticleController.getUpload)
-    .post(ArticleController.saveUpload)
- 
-router
-    .route('/rss')
-    .get(RssController.getRss)  
+    
 
 module.exports = router;

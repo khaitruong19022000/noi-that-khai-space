@@ -1,4 +1,19 @@
 $(document).ready(function () {
+    // import Tagify from '@yaireo/tagify' start
+    $('[name=from]').tagify();
+
+    var from = document.querySelector('input[name=from]')
+
+    tagify = new Tagify( from );
+
+    $('[name=cc]').tagify();
+
+    var cc = document.querySelector('input[name=cc]')
+
+    tagify = new Tagify( cc );
+    // import Tagify from '@yaireo/tagify' end
+
+
     var ckbAll = $(".cbAll");
     var fmAdmin = $("#zt-form");
 
@@ -129,55 +144,18 @@ $(document).ready(function () {
         })    
     }
 
-    // $( "form[name=form-upload]" ).submit(function( event ) {
-    //     let avatar = $(this).find("input[name=avatar]");
-    //     $(this).find("input[name=avatar]").remove();
-    //     $(this).append(avatar).css({'display':'none'});
-    // })
-
     // list article select box category
     $('select[name="filter_category"]').change(function(){
         var path = window.location.pathname.split('/')
         var linkRedirect = '/' + path[1] + '/' + path[2] + '/filter-category/' + $(this).val();
         window.location.pathname = linkRedirect;
     })
-//validate upload
-    $(function() {
-        Dropzone.options.uploadFrom = {
-            url: "/uploads/items",
-            paramName: 'file',
-            maxFilesize: 1, // MB
-            maxFiles: 1,
-            dictDefaultMessage: 'Drag an image here to upload, or click to select one',
-            headers: {
-              'x-csrf-token': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
-            },
-            acceptedFiles: 'image/*',
-            init: function() {
-              this.on('success', function(file, resp){
-                console.log(file);
-                console.log(resp);
-              });
-              this.on('thumbnail', function(file) {
-                if (file.accepted !== false) {
-                  if (file.width < 640 || file.height < 480) {
-                    file.rejectDimensions();
-                  }
-                  else {
-                    file.acceptDimensions();
-                  }
-                }
-              });
-            },
-            accept: function(file, done) {
-              file.acceptDimensions = done;
-              file.rejectDimensions = function() {
-                done('The image must be at least 640 x 480px')
-              };
-            }
-          };
-
-    });
+    // list group select box product
+    $('select[name="filter-group"]').change(function(){
+        var path = window.location.pathname.split('/')
+        var linkRedirect = '/' + path[1] + '/' + path[2] + '/filter-group/' + $(this).val();
+        window.location.pathname = linkRedirect;
+    })
 
 // Form setting
     $('button.btn_setting').click(function(){
@@ -187,100 +165,64 @@ $(document).ready(function () {
         $("div.card-body").attr("hidden",true);
         $(`div#${myId}`).removeAttr('hidden');
     });
+// loai gia
+    $("[class=inputRadio]").click(function(){
+        $("input.inputloaiGiamGia").attr("hidden",true);
+        $(this).parent().children().map(function() {
+            if($(this).attr("class") === "form-control form-control-sm inputloaiGiamGia"){
+                $(this).removeAttr('hidden');
+            }
+        })
 
-// // Form menu
-//     let menu_child_count = $('input.menu_child_count').val()
-//        var count = (menu_child_count > 0) ? menu_child_count : 0;
-//        var flag  = (menu_child_count > 0) ? true : false;
+    })
 
-//     $('button.btn_menu').click(function(){
-//         var myId = $(this).attr('id');
-//         $("button").removeClass("btn-default").addClass("btn-primary");
-//         $(`button#${myId}`).removeClass("btn-primary").addClass("btn-default");
-//         if (myId === 'add_menu') {
-//             flag  = true
-//             count++
-//             $("div.card-menu").append(`<div class="card-body" id = "menu_child${count}">
-//                                     <div class="form-group" >
-//                                         <label for="menu_child">Name Menu Child</label>
-//                                         <input type="text" class="form-control" name="menu_child" id="menu_child" value="">
-//                                     </div>
-//                                     <div class="form-group" >
-//                                         <label for="link_child">Link Child</label>
-//                                         <input type="text" class="form-control" name="link_child" id="link_child" value="">
-//                                     </div>
-//                                     <input type="hidden" name="parent" value="true">
-//                                 </div>`);                   
-//         }
-//         if (myId === 'back'){
-//             $(`div#menu_child${count}`).remove()
-//             count--
-//         }
-//         if (myId === 'cancel'){
-//             var linkRedirect = '/admin/menu/';
-//             window.location.pathname = linkRedirect;
-//         }
-//         if (count >= 1){
-//             $(`div#link_menu`).remove()
-//         }
-//         if (count < 1 && flag == true) {
-//             flag = false
-//             $("div.card-menu").append(`<div class="form-group" id="link_menu" >
-//                                     <label for="link">Link</label>
-//                                     <input type="text" class="form-control" name="link" id="link" value="">
-//                                 </div>`)
-//         }
-//         if (count < 1) {
-//             count = 0
-//         }
-//     });
 
 // Form menu
-    let menu_child_count = $('input.menu_child_count').val()
-    var count = (menu_child_count > 0) ? menu_child_count : 0;
-    var flag  = (menu_child_count > 0) ? true : false;
+    // let menu_child_count = $('input.menu_child_count').val()
+    // var count = (menu_child_count > 0) ? menu_child_count : 0;
+    // var flag  = (menu_child_count > 0) ? true : false;
 
-    $('button.btn_menu').click(function(){
-    var myId = $(this).attr('id');
-    $("button").removeClass("btn-default").addClass("btn-primary");
-    $(`button#${myId}`).removeClass("btn-primary").addClass("btn-default");
-    if (myId === 'add_menu') {
-        flag  = true
-        count++
-        $("div.card-menu").append(`<div class="card-body" id = "menu_child${count}">
-                                <div class="form-group" >
-                                    <label for="menu_child">Name Menu Child</label>
-                                    <input type="text" class="form-control" name="menu_child" id="menu_child" value="">
-                                </div>
-                                <div class="form-group" >
-                                    <label for="link_child">Link Child</label>
-                                    <input type="text" class="form-control" name="link_child" id="link_child" value="">
-                                </div>
-                                <input type="hidden" name="parent" value="true">
-                            </div>`);                   
-    }
-    if (myId === 'back'){
-        $(`div#menu_child${count}`).remove()
-        count--
-    }
-    if (myId === 'cancel'){
-        var linkRedirect = '/admin/menu/';
-        window.location.pathname = linkRedirect;
-    }
-    // if (count >= 1){
-    //     $(`div#link_menu`).remove()
+    // $('button.btn_menu').click(function(){
+    // var myId = $(this).attr('id');
+    // $("button").removeClass("btn-default").addClass("btn-primary");
+    // $(`button#${myId}`).removeClass("btn-primary").addClass("btn-default");
+    // if (myId === 'add_menu') {
+    //     flag  = true
+    //     count++
+    //     $("div.card-menu").append(`<div class="card-body" id = "menu_child${count}">
+    //                             <div class="form-group" >
+    //                                 <label for="menu_child">Name Menu Child</label>
+    //                                 <input type="text" class="form-control" name="menu_child" id="menu_child" value="">
+    //                             </div>
+    //                             <div class="form-group" >
+    //                                 <label for="link_child">Link Child</label>
+    //                                 <input type="text" class="form-control" name="link_child" id="link_child" value="">
+    //                             </div>
+    //                             <input type="hidden" name="parent" value="true">
+    //                         </div>`);                   
     // }
-    if (count < 1 && flag == true) {
-        flag = false
-        $("div.card-menu").append(`<div class="form-group" id="link_menu" >
-                                <label for="link">Link</label>
-                                <input type="text" class="form-control" name="link" id="link" value="">
-                            </div>`)
-    }
-    if (count < 1) {
-        count = 0
-    }
-    });
+    // if (myId === 'back'){
+    //     $(`div#menu_child${count}`).remove()
+    //     count--
+    // }
+    // if (myId === 'cancel'){
+    //     var linkRedirect = '/admin/menu/';
+    //     window.location.pathname = linkRedirect;
+    // }
+    // // if (count >= 1){
+    // //     $(`div#link_menu`).remove()
+    // // }
+    // if (count < 1 && flag == true) {
+    //     flag = false
+    //     $("div.card-menu").append(`<div class="form-group" id="link_menu" >
+    //                             <label for="link">Link</label>
+    //                             <input type="text" class="form-control" name="link" id="link" value="">
+    //                         </div>`)
+    // }
+    // if (count < 1) {
+    //     count = 0
+    // }
+    // });
 
 
 // active sidebar
@@ -297,9 +239,14 @@ $(document).ready(function () {
 
 });
 
-// $("#category").on("change",function(){
-//     let val = $("#category").val();
-//     let parent = $(this).parent().parent()
+// discount 
+function discountProduct() {  
+    if($('#discount').val() >0){
+        $('[value="discount"]').attr("checked",true)
+    } else {
+        $('[value="discount"]').removeAttr('checked');
+    }
+}
 
-//     console.log(val);
-// });
+
+

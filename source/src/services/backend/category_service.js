@@ -1,116 +1,59 @@
 const CategoryModel = require(`${__path_models}category_model`)
 const utilsHelpers  = require(`${__path_helpers}utils`)
-const paramsHelpers = require(`${__path_helpers}params`)
-const UploadHelpers = require(`${__path_helpers}file`)
-const notify  		= require(`${__path_configs}notify`)
-const SlugHelpers   = require(`${__path_helpers}slug`)
-
-
-var {validationResult} = require('express-validator')
-const util = require('util')
-
-const routerName = 'category';
-const renderName = `backend/page/${routerName}/`;
-
-const uploadItem = UploadHelpers.upload('avatar', `${__path_public}uploads/items/`)
-
-
 
 module.exports = {
-    getAll: async (req) => { // (GetData for LIST, Pagination, Search)
-        let condition = {}
-        let keyword   = paramsHelpers.getParam(req.query, 'keyword', '')
-        let currentStatus = paramsHelpers.getParam(req.params, 'status', 'all')
-        let sortField = paramsHelpers.getParam(req.session, 'sortField', 'ordering')
-        let sortType  = paramsHelpers.getParam(req.session, 'sortType', 'asc')
-        let sort = {}
+    getAll: async (obj) => { // (GetData for LIST, Pagination, Search)
 
-        let pagination = {
-            totalItem       : 1,
-            totalItemPerPage: 5,
-            currentPage     : parseInt(paramsHelpers.getParam(req.query, 'page', 1)),
-            pageRange       : 3
-        }
-
-        sort[sortField] = sortType
-        
-        if (currentStatus === 'all'){
-            if(keyword !== '') condition = {name: {$regex: keyword, $options: 'i'}}
-        }else {
-            condition = {status: currentStatus, name: {$regex: keyword, $options: 'i'}}
-        }
-
-        let count = await CategoryModel.count(condition)
-        pagination.totalItem = count
+        let count = await CategoryModel.count(obj.condition)
+        obj.pagination.totalItem = count
 
         let data = await CategoryModel
-                            .find(condition)
-                            .sort(sort)
-                            .skip((pagination.currentPage-1) * pagination.totalItemPerPage)
-                            .limit(pagination.totalItemPerPage)
+                            .find(obj.condition)
+                            .sort(obj.sort)
+                            .skip((obj.pagination.currentPage-1) * obj.pagination.totalItemPerPage)
+                            .limit(obj.pagination.totalItemPerPage)
 
         return{
-            data, 
-            currentStatus,
-            keyword,
-            pagination,
-            sortField,
-            sortType
+            data
         }
 
     },
 
-    countAll: async (req) => { // Filter 
-        let currentStatus = req.params.status;
-        let statusFilter = utilsHelpers.createFilterStatus(currentStatus, CategoryModel)
+    countAll: async (obj) => { // Filter 
+        let statusFilter = utilsHelpers.createFilterStatus(obj.choosedStatus, CategoryModel)
         return statusFilter
     },
 
-    changeStatus: async (req, res) => { // Change status in table
-        let id            = paramsHelpers.getParam(req.params, 'id', '')
-        let currentStatus = paramsHelpers.getParam(req.params, 'status', 'active')
-        let status        = (currentStatus === 'active') ? 'inactive' : 'active'
+    changeStatus: async (obj) => { // Change status in table
 
-        CategoryModel.updateOne({_id:id}, {status: status}, (err,result) => {
+        CategoryModel.updateOne({_id: obj.id}, {status: obj.status}, (err,result) => {
         });
         
         return {
             success: true,
-            id,
-            currentStatus,
-            status
         }
     },
 
-    changeOrdering: async (req, res) => { // Change ordering in table
-        let id            = paramsHelpers.getParam(req.params, 'id', '')
-        let ordering      = paramsHelpers.getParam(req.params, 'ordering', 0)
-        ordering          = (ordering < 0) ? 0 : ordering
-        CategoryModel.updateOne({_id:id}, {ordering: ordering}, (err,result) => {
+    changeNumber: async (obj) => { // Change ordering in table
+        CategoryModel.updateOne({ _id: obj.id }, obj.data, (err, result) => {
         });
+
         return {
             success: true,
-            id,
-            ordering
         }
-
     },
 
-    deleteItem: async (req, res) => { // Delete one items 
-        let id            = paramsHelpers.getParam(req.params, 'id', '')
-        CategoryModel.deleteOne({_id:id}, (err,result) => {
-            req.flash('warning', notify.DELETE_SUCCESS, false)           
-            res.redirect('/admin/category/')
-        });
+    deleteItem: async (obj) => { // Delete one items 
+       await CategoryModel.deleteOne({_id: obj.id});
     },
 
-    getForm: async (req) => {  // (GetData for FORM, edit, add)
-        let id            = paramsHelpers.getParam(req.params, 'id', '')
+    getForm: async (obj) => {  // (GetData for FORM, edit, add)
         let data          = {}
-        if(id === ''){ /// add
+
+        if(obj.id === ''){ /// add
             pageTitle = 'Add - Form'
         }else { /// edit
-            data = await CategoryModel.findById(id)
+            data = await CategoryModel.findById(obj.id)
             pageTitle = 'Edit - Form'
         }
 
@@ -120,55 +63,40 @@ module.exports = {
         }
     },
 
-    saveItem: async (req, res) => { // (NewData add, edit item)
-        req.body = JSON.parse(JSON.stringify(req.body))
-        let item = Object.assign(req.body)
-
-        let slug = SlugHelpers.slug(item.name)
-        item.slug = slug
-
-        if(typeof item !== 'undefined' && item.id !== ""){ //edit
-
-            CategoryModel.updateOne({_id:item.id}, {
-                ordering: item.ordering,
-                status: item.status,
-                name: item.name,
-                link: item.link,
-                slug: item.slug,
-                content: item.content
-            }, (err,result) => {
-                req.flash('success', notify.EDIT_SUCCESS, false) 
-                res.redirect('/admin/category/')
+    editItem: async (obj) => { // (edit item)
+        await CategoryModel.updateOne({_id:obj.id}, {
+                ordering: obj.ordering,
+                status: obj.status,
+                name: obj.name,
+                slug: obj.slug,
+                content: obj.content
             });
-        }else{ // add
-            await new CategoryModel(item).save().then(() => { 
-                req.flash('success', notify.ADD_SUCCESS, false) 
-                res.redirect('/admin/category/')
-            })
-        }
     },
 
-    changeMultipleAction: async (req, res) => { // (Delete multiple, Change status multiple)
-        let action = req.body.action
-        if (action === 'delete') {
-            CategoryModel.deleteMany({_id: {$in: req.body.cid}}, (err, result) =>{
-                req.flash('success', util.format(notify.DELETE_MULTI_SUCCESS, result.deletedCount), false) 
-                res.redirect('/admin/category/')
-            })
-        }else{
-            CategoryModel.updateMany({_id: {$in: req.body.cid}}, {status: req.body.action}, (err, result) =>{
-                req.flash('success', util.format(notify.CHANGE_STATUS_MULTI_SUCCESS, result.modifiedCount), false) 
-                res.redirect('/admin/category/')
-            })
-        }
+    addItem: async (obj) => { // (NewData add)
+        await new CategoryModel(obj).save()
+    },
 
-     },
+    ChangeDeleteMultiple: async (obj) => { // (Delete multiple)
+        let deletedCount
+        await CategoryModel.deleteMany({_id: {$in: obj.arrId}}).then((result) => {
+            deletedCount = result.deletedCount
+        });
 
-    getSort: async (req, res) => { //  
-        req.session.sortField      = paramsHelpers.getParam(req.params, 'sort_field', 'ordering')
-        req.session.sortType       = paramsHelpers.getParam(req.params, 'sort_type', 'asc')
-        
-        res.redirect('/admin/category/')
+        return{
+            deletedCount
+        } 
+    },
+
+     ChangeStatusMultiple: async (obj) => { // (Change status multiple)
+        let modifiedCount
+        await CategoryModel.updateMany({_id: {$in: obj.arrId}}, {status: obj.action}).then((result) =>{
+            modifiedCount = result.modifiedCount
+        });
+
+        return{
+            modifiedCount
+        } 
     },
 
     show_frontend: async () => {

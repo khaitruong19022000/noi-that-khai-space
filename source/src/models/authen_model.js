@@ -2,12 +2,30 @@ const bcrypt = require("bcrypt")
 const { Schema , model } = require("mongoose")
 
 const AuthenModel = new Schema({
-    usename: {
+    username: {
+        type : String,
+    },
+    status : {
         type : String,
     },
     password: {
         type : String,
     },
+    hoten: {
+        type : String,
+    },
+    phone: {
+        type : String,
+    },
+    email: {
+        type : String,
+    },
+    role: {
+        type : String,
+    },
+    boss: {
+        type : String,
+    }
 }, {
     timestamps : true
 }) 

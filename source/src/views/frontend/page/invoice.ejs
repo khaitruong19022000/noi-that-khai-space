@@ -1,0 +1,130 @@
+<%
+    const folderUpload = 'uploads/items/'
+    const linkPrefix   = 'admin/donHang/'
+%>
+
+<% include ./../helper/pagination.ejs %>
+<% include ./../helper/price.ejs %>
+
+<!-- Hero Section
+	============================================= -->
+<section id="slider" class="slider-element min-vh-md-100 vh-50 blog_slider"
+    style="background-image: linear-gradient(to bottom, rgba(255,255,255,.8), rgba(255,255,255,0)), url('frontend/image/slider1.jpg'); background-position: center 10%; background-size: cover;">
+    <div class="container">
+        <!-- Hero Text
+			============================================= -->
+        <div class="row min-vh-md-100 vh-50 justify-content-center align-items-md-start align-items-center text-center pt-md-5">
+            <div class="col-lg-6 mt-lg-3">
+                <p class="op-07 mb-3 text-uppercase ls2 text-smaller">KHAI SPACE</p>
+                <h1 class="display-4 fw-medium mb-5">Đơn Hàng</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Content
+	============================================= -->
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container donHang">
+                <nav class="primary-menu with-arrows order-lg-1 order-last px-0">
+
+                    <ul class="menu-container">
+                        <li class="menu-item">
+                            <a class="menu-link" href="/don-hang">
+                                <div>Tất cả</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="/don-hang/cho-lay-hang">
+                                <div>Chờ lấy hàng</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="/don-hang/van-chuyen">
+                                <div>Vận chuyển</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="/don-hang/hoan-thanh">
+                                <div>Hoàn thành</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="/don-hang/da-huy">
+                                <div>Đã hủy</div>
+                            </a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+
+            <% donhang.forEach(value => { %>
+                <table class="table cart mb-5">
+                    <thead>
+                        <tr>
+                            <th class="cart-product-remove">&nbsp;</th>
+                            <th class="cart-product-thumbnail">&nbsp;</th>
+                            <th class="cart-product-name">Sản Phẩm</th>
+                            <th class="cart-product-price">Đơn Giá</th>
+                            <th class="cart-product-quantity">Số lượng</th>
+                            <th class="cart-product-subtotal">Số Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% value.sanpham.forEach(item => { %>
+                            <tr class="cart_item">
+                                <td class="cart-product-remove">
+                                </td>
+
+                                <td class="cart-product-thumbnail">
+                                    <a href="#"><img width="64" height="64" src="/uploads/products/<%= item.avatar%>" alt="Pink Printed Dress"></a>
+                                </td>
+        
+                                <td class="cart-product-name">
+                                    <a href="#"><%= item.name%></a>
+                                </td>
+        
+                                <td class="cart-product-price">
+                                    <span class="amount"><%- priceHelper(item.price)%></span>
+                                </td>
+        
+                                <td class="cart-product-quantity">
+                                    <div class="quantity">
+                                        <input type="text" name="quantity" value="<%= item.sl%>" class="qty" />
+                                    </div>
+                                </td>
+        
+                                <td class="cart-product-subtotal">
+                                    <span class="amount"><%- priceHelper(item.sumOneProduct)%></span>
+                                </td>
+                            </tr>                        
+                        <% }) %>
+                        <tr class="cart_item">
+                            <td class="cart-product-remove">
+                            </td>
+
+                            <td class="cart-product-thumbnail">
+                            </td>
+
+                            <td class="cart-product-name">
+                            </td>
+
+                            <td class="cart-product-price">
+                            </td>
+
+                            <td class="cart-product-quantity">
+                                <span class="button button-3d m-0">Tổng tiền</span>
+                            </td>
+
+                            <td class="cart-product-subtotal">
+                                <span class="amount"><%- priceHelper(value.tongtien)%></span>
+                            </td>
+                        </tr>
+                    </tbody>
+            </table>
+            <% }) %>
+        </div>
+    </section>
+<!-- #content end -->

@@ -1,0 +1,78 @@
+<%  
+    let arrMenu = [
+        {parent: false, name: 'Dashboard', icon: 'ion-ios-keypad-outline', link: `${systemConfig.prefixAdmin}`},
+        {parent: true, child: [
+          { name: 'Blog Category', icon: 'ion-clipboard', link: `${systemConfig.prefixAdmin}/category/`},
+          { name: 'Blog Article', icon: 'fas fa-blog', link: `${systemConfig.prefixAdmin}/article/`},
+        ], name: 'Manage Blog', icon: 'fas fa-list', link: `#`},
+        {parent: true, child: [
+          { name: 'Product Category', icon: 'ion-clipboard', link: `${systemConfig.prefixAdmin}/category_product/`},
+          { name: 'Product', icon: 'fas fa-blog', link: `${systemConfig.prefixAdmin}/product/`},
+        ], name: 'Manage Product', icon: 'fas fa-list', link: `#`},
+        {parent: false, name: 'Slider', icon: 'fas fa-table', link: `${systemConfig.prefixAdmin}/slider/`},
+        {parent: false, name: 'Contact', icon: 'far fa-envelope', link: `${systemConfig.prefixAdmin}/contact/`},
+        {parent: false, name: 'Menu', icon: 'fas fa-chart-pie"', link: `${systemConfig.prefixAdmin}/menu/`},
+        {parent: false, name: 'Setting', icon: 'fas fa-wrench"', link: `${systemConfig.prefixAdmin}/setting/`},
+        {parent: false, name: 'Fee Delivery', icon: 'far fa-plus-square', link: `${systemConfig.prefixAdmin}/phiVanChuyen/`},
+        {parent: false, name: 'Code Discount', icon: 'fas fa-blog', link: `${systemConfig.prefixAdmin}/maGiamGia/`},
+        {parent: false, name: 'Invoice', icon: 'fas fa-copy', link: `${systemConfig.prefixAdmin}/donHang/`},
+        {parent: true, child: [
+          { name: 'Account Category', icon: 'ion-clipboard', link: `${systemConfig.prefixAdmin}/category_account/`},
+          { name: 'Account', icon: 'fas fa-blog', link: `${systemConfig.prefixAdmin}/account/`},
+        ], name: 'Manage Account', icon: 'fas fa-list', link: `#`},
+    ];
+    
+    let xhtmlMenu = '';
+    arrMenu.forEach(menu => {
+      if(menu.parent == false){
+        xhtmlMenu += `<li class="nav-item">
+                          <a href="/${menu.link}" class="nav-link">
+                            <i class="${menu.icon}" style="margin-right: 10px;"></i>
+                            <p>
+                              ${menu.name}
+                            </p>
+                          </a>
+                     </li>`;
+      } else if(menu.parent == true){
+        let childHtml = ''
+        menu.child.forEach(function(childrenEntry){
+          childHtml+= `
+                      <li class="nav-item">
+                        <a href="/${childrenEntry.link}" class="nav-link">
+                          <i class="${childrenEntry.icon}"></i>
+                          <p>${childrenEntry.name}</p>
+                        </a>
+                      </li>
+                      `
+        })
+        xhtmlMenu+=`
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="nav-icon ${menu.icon}"></i>
+                        <p>
+                          ${menu.name}
+                          <i class="fas fa-angle-left right"></i>
+                        </p>
+                      </a>
+                      <ul class="nav nav-treeview" style="display: none;">
+                            ${childHtml}
+                      </ul>
+                    </li>
+                `
+      }
+    });
+
+%>
+
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <a href="/admin" class="brand-link">
+    <img src="/backend/img/Kai_Avatar.jpg" alt="Admin Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light">KHAI_SPACE</span>
+  </a>
+  <div class="sidebar">
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+             <%- xhtmlMenu %>
+  </div>
+</aside>

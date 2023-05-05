@@ -3,7 +3,7 @@ const ramdomstring = require('randomstring')
 const path = require('path')
 const fs = require('fs')
 
-let uploadFile = (field, folderDes = `${__path_public}uploads/items/`, fileNameLength = 10, fileSizeMb = 5, fileExtension = 'jpeg|jpg|png|gif') => {
+let uploadFile = (field, folderDes = `${__path_public}uploads/items/`, fileNameLength = 10, fileSizeMb = 5, fileExtension = 'jpeg|jpg|png|gif|webp') => {
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
           cb(null, folderDes)
@@ -12,6 +12,7 @@ let uploadFile = (field, folderDes = `${__path_public}uploads/items/`, fileNameL
           cb(null, ramdomstring.generate(fileNameLength) + path.extname(file.originalname))
         }
     });
+    
     const upload = multer({ 
         storage: storage,
         limits:{
@@ -28,7 +29,7 @@ let uploadFile = (field, folderDes = `${__path_public}uploads/items/`, fileNameL
                 cb('Phần mở rộng của tập tin ko phù hợp');
             }
         }
-     }).single(field)
+     }).array(field, 5)
     //  .single(field);.array(field, 5)
      return upload;
 }

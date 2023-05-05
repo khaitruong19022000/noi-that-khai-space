@@ -1,0 +1,12 @@
+<% include ./../../helper/dashboard.ejs %>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <%- dashboardHelper("bg-info", items.category, "Blog Category" , "ion-bag", "admin/category") %>
+            <%- dashboardHelper("bg-success", items.article, "Blog Article" , "ion-stats-bars", "admin/article") %>
+            <%- dashboardHelper("bg-warning", items.slider, "Slider" , "ion-person-add" ) %>
+            <%- dashboardHelper("bg-danger", items.menu, "Menu" , "ion-pie-graph", "admin/menu") %>
+        </div>
+    </div>
+</section>

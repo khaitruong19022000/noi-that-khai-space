@@ -1,0 +1,185 @@
+<%
+    const folderUpload = 'uploads/items/'
+    const linkPrefix   = 'admin/donHang/'
+%>
+
+<% include ./../helper/pagination.ejs %>
+
+<!-- Hero Section
+	============================================= -->
+<section id="slider" class="slider-element min-vh-md-100 vh-50 blog_slider"
+    style="background-image: linear-gradient(to bottom, rgba(255,255,255,.8), rgba(255,255,255,0)), url('frontend/image/slider1.jpg'); background-position: center 10%; background-size: cover;">
+    <div class="container">
+        <!-- Hero Text
+			============================================= -->
+        <div class="row min-vh-md-100 vh-50 justify-content-center align-items-md-start align-items-center text-center pt-md-5">
+            <div class="col-lg-6 mt-lg-3">
+                <p class="op-07 mb-3 text-uppercase ls2 text-smaller">KHAI SPACE</p>
+                <h1 class="display-4 fw-medium mb-5">THANH TOÁN</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Content
+	============================================= -->
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container">
+    
+                <table class="table cart mb-5">
+                    <thead>
+                        <tr>
+                            <th class="cart-product-remove">&nbsp;</th>
+                            <th class="cart-product-thumbnail">&nbsp;</th>
+                            <th class="cart-product-name">Sản Phẩm</th>
+                            <th class="cart-product-price">Đơn Giá</th>
+                            <th class="cart-product-quantity">Số Lượng</th>
+                            <th class="cart-product-subtotal">Số Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody id="check-out">
+                    </tbody>
+    
+                </table>
+    
+                <div class="row col-mb-30">
+                    <div class="col-lg-6">
+                        <h4>Địa Chỉ Nhận Hàng</h4>
+                        <span class="form-message" style = "color: red;"></span>
+                        <form class="row" action= <%= linkPrefix + 'add'%> method="POST" name="donhang">
+                            <div class="col-8 form-group">
+                                <b><input type="text" class="sm-form-control required" style="font-weight:bold;" placeholder="Họ Tên" value="<%= userInfo.hoten%>" required/></b>
+                            </div>
+    
+                            <div class="col-4 form-group">
+                                <input type="text" class="sm-form-control required" style="font-weight:bold;" placeholder="Số Điện Thoại" value="<%= userInfo.phone%>" required/>
+                            </div>
+
+                            <div class="col-12 form-group">
+                                <select  class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                                    <option value="" selected>Chọn tỉnh thành</option>           
+                                </select>
+                                              
+                                <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                                    <option value="" selected>Chọn quận huyện</option>
+                                </select>
+                                    
+                                <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                                    <option value="" selected>Chọn phường xã</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 form-group">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm">
+                                    <option value="0" selected>Chọn hình thức thanh toán</option>
+                                    <option value="1" >Thanh toán khi nhận hàng</option>
+                                    <option value="2" >Chuyển khoản ngân hàng</option>
+                                </select>
+                            </div>
+
+                            <div class="col-8 form-group">
+                                <input type="text" name="ghichu" class="sm-form-control" placeholder="Lời nhắn cho người bán" />
+                            </div>
+
+                            <div class="col-4 form-group">
+                                <input type="text" class="sm-form-control" placeholder="Mã Giảm Giá" />
+                            </div>
+
+                            <input type="text" name="sanpham" hidden/>
+                            <input type="text" name="tongthanhtoan" hidden/>
+                            <input type="text" name="diachi" hidden/>
+
+                            <div class="col-12 form-group">
+                                <button class="button button-3d m-0 button-black">Thanh Toán</button>
+                            </div>
+                        </form>
+                    </div>
+    
+                    <div class="col-lg-6">
+                        <h4>Thanh Toán</h4>
+    
+                        <div class="table-responsive">
+                            <table class="table cart cart-totals">
+                                <tbody>
+                                    <tr class="cart_item">
+                                        <td class="cart-product-name">
+                                            <strong>Tổng tiền hàng</strong>
+                                        </td>
+    
+                                        <td class="cart-product-name">
+                                            <span class="amount" id="totalProduct">0đ</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="cart_item">
+                                        <td class="cart-product-name">
+                                            <strong>Phí vận chuyển</strong>
+                                        </td>
+    
+                                        <td class="cart-product-name">
+                                            <span class="amount Free_Delivery">0đ</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="cart_item">
+                                        <td class="cart-product-name">
+                                            <strong>Tổng thanh toán</strong>
+                                        </td>
+    
+                                        <td class="cart-product-name">
+                                            <span class="amount color lead"><strong class="TongThanhToan">0đ</strong></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+    
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+<!-- #content end -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json", 
+    method: "GET", 
+    responseType: "application/json", 
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+    renderCity(result.data);
+    });
+
+    function renderCity(data) {
+    for (const x of data) {
+    citis.options[citis.options.length] = new Option(x.Name, x.Id);
+    }
+    citis.onchange = function () {
+    district.length = 1;
+    ward.length = 1;
+    if(this.value != ""){
+    const result = data.filter(n => n.Id === this.value);
+
+    for (const k of result[0].Districts) {
+        district.options[district.options.length] = new Option(k.Name, k.Id);
+    }
+    }
+    };
+    district.onchange = function () {
+    ward.length = 1;
+    const dataCity = data.filter((n) => n.Id === citis.value);
+    if (this.value != "") {
+    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+    for (const w of dataWards) {
+        wards.options[wards.options.length] = new Option(w.Name, w.Id);
+    }
+    }
+    };
+    }
+</script>

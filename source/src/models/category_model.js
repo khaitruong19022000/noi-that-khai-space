@@ -10,9 +10,6 @@ const CategoryModel = new Schema({
     slug : {
         type : String,
     },
-    link : {
-        type : String,
-    },
     ordering : {
         type : Number,
     },

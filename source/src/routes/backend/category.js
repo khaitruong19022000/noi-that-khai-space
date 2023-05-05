@@ -19,8 +19,8 @@ router
     .get(categoryController.getStatus)
 
 router
-    .route('/change-ordering/:id/:ordering')
-    .get(categoryController.getOrdering)    
+    .route('/change-number/:id/:number/:collection')
+    .get(categoryController.getNumber)    
 
 router
     .route('/delete/:id')

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>	
+	<%- include('./elements/title.ejs'); -%>
+	<!-- Stylesheets
+	============================================= -->
+	<%- include('./elements/css.ejs'); -%>
+	<!-- Document Title
+	============================================= -->
+</head>
+
+<body class="stretched">
+
+	<!-- Cart Panel Background
+	============================================= -->
+	<div class="body-overlay"></div>
+
+	<!-- Cart Side Panel
+	============================================= -->
+	<%- include('./elements/side-cart.ejs'); -%>
+
+	<!-- Document Wrapper
+	============================================= -->
+	<div id="wrapper" class="clearfix">
+		<!-- Top Bar inform
+		============================================= -->
+		<%- include('./elements/top-bar.ejs'); -%>
+		<!-- #top-bar end -->
+
+		<!-- Header
+		============================================= -->
+		<%- include('./elements/header.ejs'); %>
+		<!-- #header end -->
+
+		<%- body %>
+
+		<!-- Footer
+		============================================= -->
+		<%- include('./elements/footer.ejs'); -%>
+		<!-- #footer end -->
+
+	</div><!-- #wrapper end -->
+
+	<!-- Go To Top
+	============================================= -->
+	<%- include('./elements/go-to.ejs'); -%>
+	<!-- JavaScripts
+	============================================= -->
+	<%- include('./elements/script.ejs'); -%>
+
+</body>
+</html>
