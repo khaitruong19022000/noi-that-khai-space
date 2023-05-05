@@ -7,10 +7,16 @@ const CategoryProductModel = new Schema({
     status : {
         type : String,
     },
+    slug : {
+        type : String,
+    },
     ordering : {
         type : Number,
     },
     content : {
+        type : String,
+    },
+    avatar : {
         type : String,
     },
     created: {

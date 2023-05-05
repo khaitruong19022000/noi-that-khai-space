@@ -4,8 +4,10 @@ var path = require('path');
 require('dotenv').config()
 const expressLayouts = require("express-ejs-layouts");
 var logger = require('morgan');
-const flash = require('express-flash-notification');
+// const flash = require('express-flash-notification');
+var flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
+const passport = require('passport')
 const session = require('express-session');
 const moment = require('moment');
 
@@ -37,9 +39,21 @@ app.use(cookieParser());
 app.use(session({
     secret: 'abcsdf',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 20*60*1000
+    }
 }));
-app.use(flash(app));
+require(`${__path_configs}passport`)(passport);
+app.use(passport.initialize())
+app.use(passport.session())
+
+// app.use(flash(app));
+app.use(flash());
+app.use(function(req, res, next) {
+  res.locals.messages = req.flash();
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

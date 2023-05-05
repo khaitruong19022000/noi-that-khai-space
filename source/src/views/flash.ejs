@@ -1,4 +1,9 @@
-<div class="alert alert-<%= type%>" role="alert">
-    <button type="button" class="close">×</button>
-    <span class="close-btn" style="font-size: large;"><%= message%></span>
-</div>
+
+<% Object.keys(messages).forEach(function (type) { %>
+    <div class="alert alert-<%= ((type === 'error')?'danger':type)%>" role="alert">
+        <button type="button" class="close">×</button>
+        <% messages[type].forEach(function (message) { %>
+            <span class="close-btn" style="font-size: large;"><%= message%></span>
+        <% }) %>
+    </div>
+<% }) %>

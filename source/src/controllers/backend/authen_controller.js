@@ -1,34 +1,47 @@
 const routerName = 'authen';
 const renderName = `backend/page/${routerName}/`;
 
-const AuthenModel = require(`${__path_models}authen_model`)
-const bcrypt = require("bcrypt")
+const linkPrefix = `/admin/authen/`
+
+const util = require('util')
+var passport = require('passport');
+
+
+const notify = require(`${__path_configs}notify`)
+const paramsHelpers = require(`${__path_helpers}params`)
+const {validationResult} = require('express-validator')
+
+const AuthenService = require(`${__path_services}backend/account_service`);
+
 
 module.exports = {
     saveSignup: async (req , res , next) => {
-        const { usename, password } = req.body
-        let data = {}
-
-        data.usename = usename
-        data.password = password
-
-        await new AuthenModel(data).save()
-
-        res.send({
-            msg: 'Success',
-        })
+        const { data, code, user_code } = req.body
+        if (code === user_code) {
+            const newdata = JSON.parse(data);
+            await AuthenService.addItem(newdata)
+    
+            req.flash('success', notify.SUCCESS_SIGNUP)
+            res.redirect(`/dang-nhap`)
+        } else {
+            req.flash('danger', notify.ERROR_CHECK_CODE)
+            res.redirect(`/dang-ky/ma-kich-hoat`)
+        }
     },
 
     checkLogin: async (req , res , next) => {
-        const { usename, password } = req.body
+        passport.authenticate('local', { 
+            successRedirect: '/',
+            failureRedirect: '/dang-nhap',
+            failureFlash: true
+        })(req , res , next);
+    },
 
-        let data = await AuthenModel.findOne({usename})
+    checkLogout : async (req , res , next) => {
+        req.logout(function(err) {
+            if (err) { return next(err); }
+            res.redirect('/dang-nhap');
+          });
+    },
 
-        bcrypt.compare(password, data.password, function(err, result) {
-            if (result) {
-            console.log('1');
-            }
-        });
-        console.log('2');
-    }
 }

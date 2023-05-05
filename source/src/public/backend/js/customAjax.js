@@ -25,15 +25,30 @@ const changeStatus = (link) => {
     );
 }
 
-const changeOrdering = (link, id) => {
-    let idOrdering = `inputOrdering-${id}`
+const changeOrdering = (link, id, collection) => {
+    let idOrdering = `input${collection}-${id}`
     let i = document.getElementById(idOrdering).value;
-    let newlink = link + i;
+    let newlink = link + i + '/' + collection;
     $.get(newlink,
         function (data, textStatus, jqXHR) {
-            let { success } = data;
+            let { success, collection } = data;
             if (success === true) {
-                alertify.success('Thay đổi ordering thành công'); 
+                alertify.success(` Thay đổi ${collection} thành công`); 
+            }
+        },
+        "json"
+    );
+}
+
+const changeCheckBox = (link, value_input) => {
+    let value = document.getElementById(value_input).value;
+    let newlink = link + value ;
+
+    $.get(newlink,
+        function (data, textStatus, jqXHR) {
+            let { success, collection } = data;
+            if (success === true) {
+                alertify.success(` Thay đổi lựa chọn thành công`); 
             }
         },
         "json"
@@ -45,9 +60,9 @@ const changeCategory = (link, category) => {
     let newlink = link + i;
     $.get(newlink,
         function (data, textStatus, jqXHR) {
-            let { success } = data;
+            let { success, name } = data;
             if (success === true) {
-                alertify.success('Thay đổi category thành công'); 
+                alertify.success(`Thay đổi Category thành công`); 
             }
         },
         "json"

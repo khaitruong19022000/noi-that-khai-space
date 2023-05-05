@@ -13,5 +13,8 @@ module.exports = async (req, res, next) => {
     await frontendhelper.getCategory(req).then((result) => {
         res.locals.listCategory = result.data
     })
+    await frontendhelper.getProductCategory(req).then((result) => {
+        res.locals.listProductCategory = result.data
+    })
     next()
   };

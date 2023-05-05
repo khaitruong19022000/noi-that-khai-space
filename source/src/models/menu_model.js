@@ -12,15 +12,7 @@ const MenuModel = new Schema({
     },
     link:{
         type : String,
-    },
-    child:[{
-        name_child: {
-            type : String,
-        },
-        link_child:{
-            type : String,
-        },
-    }],
+    }
 }, {
     timestamps : true
 }) 

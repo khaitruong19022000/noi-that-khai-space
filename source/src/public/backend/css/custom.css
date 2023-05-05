@@ -19,7 +19,7 @@
 
 /*Setting*/
 button.btn_setting{
-  width: 150px;
+  width: 115px;
 }
 
 div.button_setting{
@@ -71,3 +71,19 @@ table.my_table th.name{
   margin-left: 40%;
 }
   /*end menu form*/
+
+.dropzone .dz-preview .dz-image img {
+  width: 100% !important;
+}
+
+/*Loai Giam Gia start*/
+.loaiGiamGia{
+  margin-left: 4%;
+}
+
+.inputloaiGiamGia{
+  float: right;
+  margin-right: 30%;
+  width: 30%;
+}
+/*Loai Giam Gia end*/

@@ -7,29 +7,39 @@ const ProductModel = new Schema({
     status : {
         type : String,
     },
+    slug :{
+        type : String,
+    },
     ordering : {
+        type : Number,
+    },
+    quantity : {
+        type : Number,
+    },
+    price : {
+        type : Number,
+    },
+    discount : {
         type : Number,
     },
     content : {
         type : String,
     },
-    avatar : {
-        type : String,
-    },
+    arrCheck : [
+        String,
+    ],
+    avatar : [
+        String,
+    ],
     id_category : {
         type : String,
     },
-    created: {
-        user_id: Number,
-        user_name: String,
-        time: Date,
-    },
-    modified: {
-        user_id: Number,
-        user_name: String,
-        time: Date,
+    id_group_category : {
+        type : String,
     }
-}) 
+},{
+    timestamps : true
+})
 
 
 module.exports = model('products' , ProductModel)

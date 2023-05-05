@@ -1,0 +1,57 @@
+<% include ./../../flash.ejs %>
+<section id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+
+            <div class="tabs mx-auto mb-0 clearfix" id="tab-login-register" style="max-width: 500px;">
+
+                <div class="tab-container">
+
+                    <div class="tab-content" id="tab-register">
+                        <div class="card mb-0">
+                            <div class="card-body" style="padding: 40px;">
+                                <h3>Đăng ký</h3>
+
+                                <form id="register-form" name="register-form" class="row mb-0" action="/dang-ky/ma-kich-hoat" method="post">
+
+                                    <div class="col-12 form-group">
+                                        <label for="username">Tên Đăng Nhập:</label>
+                                        <input type="text" id="username" name="username" value="" class="form-control" />
+                                    </div>
+
+                                    <div class="col-12 form-group">
+                                        <label for="password">Mật Khẩu:</label>
+                                        <input type="password" id="password" name="password" value="" class="form-control" />
+                                    </div>
+
+                                    <div class="col-12 form-group">
+                                        <label for="hoten">Họ Tên:</label>
+                                        <input type="text" id="hoten" name="hoten" value="" class="form-control" />
+                                    </div>
+
+                                    <div class="col-12 form-group">
+                                        <label for="phone">Số Điện Thoại:</label>
+                                        <input type="text" id="phone" name="phone" value="" class="form-control" />
+                                    </div>
+
+                                    <div class="col-12 form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="text" id="email" name="email" value="" class="form-control" />
+                                    </div>
+
+                                    <div class="col-12 form-group">
+                                        <button class="button button-3d button-black m-0" id="register-form-submit" name="register-form-submit" value="register">Đăng ký</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>

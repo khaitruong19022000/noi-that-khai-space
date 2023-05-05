@@ -1,0 +1,84 @@
+<%
+    const folderUpload = 'uploads/items/'
+    const folderUploadProduct = 'uploads/products/'
+%>
+<% include ./../helper/price.ejs %>
+
+<!-- Hero Section
+            ============================================= -->
+<section id="slider" class="slider-element min-vh-md-100 vh-50 blog_slider"
+    style="background-image: linear-gradient(to bottom, rgba(255,255,255,.8), rgba(255,255,255,0)), url('<%= folderUpload%><%= data_blog_detail.avatar%>'); background-position: center 10%; background-size: cover;">
+
+    <div class="container">
+
+        <!-- Hero Text
+                    ============================================= -->
+        <div class="row min-vh-md-100 vh-50 justify-content-center align-items-md-start align-items-center pt-md-5">
+            <!-- <div class="col-lg-6 mt-lg-3"> -->
+            <div class="title-slide">
+                <p class="op-07 mb-3 text-uppercase ls2 text-smaller">Kiến thức nội thất</p>
+                <h1 class="display-4 fw-medium mb-5"><%= data_blog_detail.name%></h1>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Content
+            ============================================= -->
+<section id="content">
+    <div class="content-wrap py-0">
+        <!-- 2. Section
+                    ============================================= -->
+        <div class="section bg-transparent my-0 py-0">
+            <div class="container-fluid">
+                <!-- 1 -->
+                <div class="row align-items-md-center blog_detail">
+                    <!-- Image -->
+                    <div class="col-md-6 px-lg-0 min-vh-50 min-vh-lg-75 d-flex align-self-stretch"
+                        style="background: url('<%=folderUpload%><%= data_blog_detail.avatar%>') no-repeat center center; background-size: cover;">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="col-md-6 p-5 p-lg-6">
+                        <h3 class="h3 bottommargin fw-medium px-lg-5">1.<%= data_blog_detail.name%></h3>
+                        <p class="m-0 px-lg-5"><%- data_blog_detail.content%></p>
+                    </div>
+                </div>
+                <div class="clear"> </div>
+                <div class="clear"> </div>
+
+                <div class="container text-center mw-md topmargin bottommargin">
+                    <h4 class="display-4 fw-normal">Sản Phẩm Trong Phòng</h4>
+                </div>
+
+                <div class="container">
+                    <div id="shop" class="shop row gutter-30 col-mb-30 mt-3">
+                        <% data_product_group.forEach((value) => { %>
+                            <div class="product col-lg-3 col-md-4 col-sm-6 col-12">
+                                <div class="grid-inner">
+                                    <div class="product-image">
+                                        <a href="#"><img src="<%= folderUploadProduct%><%= value.avatar[0]%>" alt="<%= value.name%>"></a>
+                                        <a href="#"><img src="<%= folderUploadProduct%><%= value.avatar[1]%>" alt="<%= value.name%>"></a>
+                                        <div class="bg-overlay">
+                                            <div class="bg-overlay-content align-items-end justify-content-between" data-hover-animate="fadeIn" data-hover-speed="400">
+                                                <a href="#" class="btn btn-light me-2"><i class="icon-line-shopping-cart"></i></a>
+                                                <a href="/view_product/<%= value.id%>" class="btn btn-light"><i class="icon-line-expand"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-desc">
+                                        <div class="product-title mb-0"><h4 class="mb-0"><a class="fw-medium" href="/view_product/<%= value.id%>"><%= value.name%></a></h4></div>
+                                        <h5 class="product-price fw-normal"><%- priceHelper(value.price)%></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Section End -->
+    </div>
+</section>
+<!-- #content end -->

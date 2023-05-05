@@ -1,0 +1,87 @@
+<%
+    const folderUpload = 'uploads/items/'
+    const linkPrefix   = '/blog'
+%>
+
+<% include ./../helper/pagination.ejs %>
+
+<!-- Hero Section
+	============================================= -->
+<section id="slider" class="slider-element min-vh-md-100 vh-50 blog_slider"
+    style="background-image: linear-gradient(to bottom, rgba(255,255,255,.8), rgba(255,255,255,0)), url('frontend/image/slider1.jpg'); background-position: center 10%; background-size: cover;">
+    <div class="container">
+        <!-- Hero Text
+			============================================= -->
+        <div class="row min-vh-md-100 vh-50 justify-content-center align-items-md-start align-items-center text-center pt-md-5">
+            <div class="col-lg-6 mt-lg-3">
+                <p class="op-07 mb-3 text-uppercase ls2 text-smaller">Bộ sưu tập</p>
+                <h1 class="display-4 fw-medium mb-5">Thiết kế nội thất</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 mt-lg-3">
+        <nav class="title_breadcrumb">
+            <a href="/">
+                Trang chủ
+            </a>
+            <span>
+                /
+             </span>
+            <a href="/blog">
+                Blog
+            </a>
+            <% if(pageTitle !== '') { %>
+                <span>
+                    /
+                 </span>
+                <a href="<%= slug%>">
+                    <%= pageTitle%>
+                </a>
+            <% } %>
+        </nav>
+    </div>
+</section>
+
+<!-- Content
+		============================================= -->
+<section id="content">
+    <div class="content-wrap py-0">
+        <div class="container-fluid">
+            <!-- Heading Title -->
+			<div class="mt-6 mb-5 blog_side">
+				<h4 class="h4 fw-normal mb-4 blog_category_title">
+                    <a href="<%= linkPrefix%>" style="color: #010101;">
+                        <b>Category</b>
+                    </a>
+                </h4>
+                <div class="blog_category">
+                    <% listCategory.forEach((value) => { %>
+                        <div class="blog_category_sub">
+                            <a href="<%= value.slug%>">
+                                <span><%= value.name%></span>
+                            </a>
+                        </div>
+                    <% }) %>
+                </div>
+			</div>
+
+            <!-- Categories -->
+            <div class="row item-categories gutter-20 blog_content">
+                <% data_blog.forEach((value) => { %>
+                    <div class="col-lg-6 col-md-6">
+                        <a href="blogs/<%= value.slug%>" class="d-block h-op-09 op-ts"
+                            style="background: url('<%=folderUpload%><%= value.avatar%>') no-repeat center center; background-size: cover; height: 340px;">
+                        </a>
+                        <a href="blogs/<%= value.slug%>">
+                            <h4 class="title_product"><%= value.name%></h4>
+                            <div>------</div>
+                            <p class="des_product"><%- value.short_description%>[..]</p>
+                        </a>
+                    </div>
+                <% }) %>
+                <%- paginationHelper(pagination,slug, linkPrefix) %>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- #content end -->

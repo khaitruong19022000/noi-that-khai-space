@@ -64,7 +64,7 @@ module.exports = {
         let choosedStatus = req.params.status;
         let statusFilter = await ProductService.countAll({choosedStatus, arrIdCategory, arrIdGroup})
 
-        let pageTitle = 'Blog Article'
+        let pageTitle = 'Product'
  
         res.render(`${renderName}list` , {
             items :        data,
@@ -254,14 +254,21 @@ module.exports = {
                 return;
             }else{
                 if (typeof item !== 'undefined' && item.id !== "") { //edit
-                    let avatarRemove = item.image_old.split(',')
-                    avatarRemove.forEach(img => {
-                        fileHelpers.remove('src/public/uploads/products/',img)
-                    })
-                    item.avatar = []
-                    req.files.forEach((results) => {
-                        item.avatar.push(results.filename)
-                    })
+                    item.avatar = item.arrAvatar.split(',')
+                    if(item.remove_image_old !== ''){
+                        arrAvatar = item.arrAvatar.replace(item.remove_image_old, '')
+                        let avatarRemove = item.remove_image_old.split(',')
+                        avatarRemove.forEach(img => {
+                            fileHelpers.remove('src/public/uploads/products/',img)
+                            item.avatar = item.avatar.filter(item => item !== img)
+                        })
+                    }
+
+                    if (Object.keys(req.files).length > 0){
+                        req.files.forEach((results) => {
+                            item.avatar.push(results.filename)
+                        })
+                    }
 
                     await ProductService.editItem(item)
 

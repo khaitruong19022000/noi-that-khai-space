@@ -11,4 +11,9 @@ module.exports = {
   ERROR_ORDERING: 'Phải là số nguyên lớn hơn %d và bé hơn %d',
   ERROR_STATUS: 'Phải là một giá trị khác rỗng',
   ERROR_CONTENT: 'Chiều dài content từ %d đến %d ký tự',
+  ERROR_LOGIN_USERNAME_NOTEXIST: 'Username không tồn tại',
+  ERROR_LOGIN_PASSWORD_INCORRECT: 'Password không chính xác',
+  SUCCESS_SIGNUP: 'Đăng ký tài khoản thành công',
+  ERROR_CHECK_CODE: 'Mã kích hoạt không đúng',
+  
 };

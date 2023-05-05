@@ -1,5 +1,6 @@
 const routerName = 'menu';
 const renderName = `backend/page/${routerName}/`;
+const linkPrefix = `/admin/menu/`
 
 const MenuModel = require(`${__path_models}menu_model`)
 
@@ -68,7 +69,7 @@ module.exports = {
         req.session.sortField      = paramsHelpers.getParam(req.params, 'sort_field', 'ordering')
         req.session.sortType       = paramsHelpers.getParam(req.params, 'sort_type', 'asc')
         
-        res.redirect('/admin/menu/')
+        res.redirect(`${linkPrefix}`)
     },
 
     getStatus: async (req , res , next) => {
@@ -90,8 +91,8 @@ module.exports = {
         let id = paramsHelpers.getParam(req.params, 'id', '')
 
         await MenuService.deleteItem({id})
-        req.flash('warning', notify.DELETE_SUCCESS, false)           
-        res.redirect('/admin/menu/')
+        req.flash('warning', notify.DELETE_SUCCESS)           
+        res.redirect(`${linkPrefix}`)
     },
 
     saveItem: async (req , res , next) => {
@@ -102,13 +103,13 @@ module.exports = {
 
             await MenuService.editItem(item)
 
-            req.flash('success', notify.EDIT_SUCCESS, false)
-            res.redirect('/admin/menu/')
+            req.flash('success', notify.EDIT_SUCCESS)
+            res.redirect(`${linkPrefix}`)
         } 
         else { //add
             await MenuService.addItem(item)
-            req.flash('success', notify.ADD_SUCCESS, false)
-            res.redirect('/admin/menu/')
+            req.flash('success', notify.ADD_SUCCESS)
+            res.redirect(`${linkPrefix}`)
         }
     },
 
@@ -119,13 +120,13 @@ module.exports = {
         if (action === 'delete') {
             let {deletedCount} = await MenuService.changeDeleteMultiple({arrId})
 
-            req.flash('success', util.format(notify.DELETE_MULTI_SUCCESS, deletedCount), false) 
-            res.redirect('/admin/menu/')
+            req.flash('success', util.format(notify.DELETE_MULTI_SUCCESS, deletedCount)) 
+            res.redirect(`${linkPrefix}`)
         }else{
             let {modifiedCount} = await MenuService.changeStatusMultiple({arrId, action})
 
-            req.flash('success', util.format(notify.CHANGE_STATUS_MULTI_SUCCESS, modifiedCount), false) 
-            res.redirect('/admin/menu/')
+            req.flash('success', util.format(notify.CHANGE_STATUS_MULTI_SUCCESS, modifiedCount)) 
+            res.redirect(`${linkPrefix}`)
         }
     },
 }
